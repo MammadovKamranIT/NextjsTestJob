@@ -7,6 +7,7 @@ const TaskCreate = () => {
     return (
         <form action={addTask}>
             <input placeholder='text' name="text" />
+            <input placeholder='status' name="status" />
             <button type="submit">Add</button>
         </form>
     )

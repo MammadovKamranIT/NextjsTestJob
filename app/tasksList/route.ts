@@ -13,12 +13,12 @@ export function deleteTask(id: string) {
     tasks = tasks.filter(item => item.id !== id)
 }
 
-export function updateTask(id: string, text: string) {
+export function updateTask(id: string, title: string) {
     const task: Task | undefined = tasks.find(item => item.id === id)
     if (!task) {
         return NextResponse.json({ error: 'Заметка не найдена' }, { status: 404 })
     }
-    task.title = text
+    task.title = title
     
     return NextResponse.json(task)
 
@@ -30,7 +30,11 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
     const body = await request.json()
-    const newTask = { id: String(Date.now()), title: body.title, status: body.status, creationtime: body.creationtime }
+         console.log('body', body)
+         let id = String(Math.floor(Math.random()*100))
+         while(tasks.find(item => item.id === id)){ id = String(Math.floor(Math.random()*10))}
+    const newTask = { id: id, title: body.title, status: body.status, creationtime: String(Date.now()) }
+     console.log('newTask',newTask)
     tasks.push(newTask)
     return NextResponse.json(newTask, { status: 201 })
 }
